@@ -1,0 +1,8 @@
+# Ignore document files
+*.docx
+*.pdf
+*.zip
+
+# Ignore temporary document files (like Word temp files)
+~$*.docx
+/vite-frontend
