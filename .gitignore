@@ -4,6 +4,10 @@
 *.zip
 
 # Ignore temporary document files (like Word temp files)
+<<<<<<< HEAD
 ~$*.docx
 /vite-frontend
 .env
+=======
+~$*.docx
+>>>>>>> 85cd890 (new frontend in vite added, and roadmap.md added)
