@@ -14,7 +14,7 @@ export const PipelineToolbar = () => {
         {/* New Custom Nodes */}
         <DraggableNode type="api" label="API Call" />
         <DraggableNode type="filter" label="Filter" />
-        <DraggableNode type="transform" label="Transform" />
+        <DraggableNode type="transform" label="Transform Text" />
         <DraggableNode type="delay" label="Delay" />
         <DraggableNode type="webhook" label="Webhook" />
         <DraggableNode type="variable" label="Variable" />
