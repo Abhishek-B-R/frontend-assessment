@@ -19,6 +19,8 @@ import { FilterNode } from './nodes/filter-node';
 import { TransformNode } from './nodes/transform-node';
 import { DelayNode } from './nodes/delay-node';
 import { WebhookNode } from './nodes/webhook-node';
+import { VariableNode } from './nodes/variable-node';
+import { MathNode } from './nodes/math-node';
 
 import '@xyflow/react/dist/style.css';
 
@@ -34,6 +36,8 @@ const nodeTypes = {
   transform: TransformNode,
   delay: DelayNode,
   webhook: WebhookNode,
+  variable: VariableNode,
+  math: MathNode,
 };
 
 export const PipelineUI = () => {
@@ -51,7 +55,7 @@ export const PipelineUI = () => {
 
   const getInitNodeData = (nodeID, type) => {
     const baseData = { id: nodeID, nodeType: type };
-    
+
     switch (type) {
       case 'customInput':
         return { ...baseData, inputName: nodeID.replace('customInput-', 'input_'), inputType: 'Text' };
@@ -71,10 +75,15 @@ export const PipelineUI = () => {
         return { ...baseData, duration: 1000 };
       case 'webhook':
         return { ...baseData, url: '', secret: '' };
+      case 'variable':
+        return { ...baseData, key: '', value: '' };
+      case 'math':
+        return { ...baseData, expression: 'a + b', variables: { a: 1, b: 2 } };
       default:
         return baseData;
     }
   };
+
 
   const onDrop = useCallback(
     (event) => {

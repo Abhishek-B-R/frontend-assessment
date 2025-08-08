@@ -17,6 +17,8 @@ export const PipelineToolbar = () => {
         <DraggableNode type="transform" label="Transform" />
         <DraggableNode type="delay" label="Delay" />
         <DraggableNode type="webhook" label="Webhook" />
+        <DraggableNode type="variable" label="Variable" />
+        <DraggableNode type="math" label="Math" />
       </div>
     </div>
   );
