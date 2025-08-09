@@ -4,10 +4,51 @@
 *.zip
 
 # Ignore temporary document files (like Word temp files)
-<<<<<<< HEAD
 ~$*.docx
 /vite-frontend
 .env
-=======
-~$*.docx
->>>>>>> 85cd890 (new frontend in vite added, and roadmap.md added)
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+PYMANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
