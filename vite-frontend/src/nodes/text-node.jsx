@@ -1,5 +1,5 @@
-import { useState, useRef, useMemo } from 'react';
-import { Position } from '@xyflow/react';
+import { useState, useRef, useMemo, useEffect } from 'react';
+import { Position, useUpdateNodeInternals } from '@xyflow/react';
 import { BaseNode } from '../base-node';
 import { extractVariables } from './handleTextChange';
 import { useStore } from '../store';
@@ -7,6 +7,12 @@ import { useStore } from '../store';
 export const TextNode = (props) => {
   const [currText, setCurrText] = useState(props.data?.text || '{{input}}');
   const textareaRef = useRef(null);
+  const updateNodeInternals = useUpdateNodeInternals();
+
+  useEffect(() => {
+    updateNodeInternals(props.id);
+  }, [currText, props.id, updateNodeInternals]);
+
 
   // Access all nodes from store
   const allNodes = useStore((state) => state.nodes);

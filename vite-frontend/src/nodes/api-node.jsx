@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Position } from "@xyflow/react";
+import { useState, useRef, useEffect } from "react";
+import { Position, useUpdateNodeInternals } from "@xyflow/react";
 import { BaseNode } from "../base-node";
 import { handleTextChange } from "./handleTextChange"; // Assuming this utility function is defined
 
@@ -7,6 +7,13 @@ export const APINode = (props) => {
   const [url, setUrl] = useState(props.data?.url || "");
   const urlMeasureRef = useRef(null);
   const textareaRef = useRef(null);
+
+  const updateNodeInternals = useUpdateNodeInternals();
+
+  useEffect(() => {
+    updateNodeInternals(props.id);
+  }, [url, props.id, updateNodeInternals]);
+
 
   const handleMethodChange = (e, updateField) => {
     updateField("method", e.target.value);
