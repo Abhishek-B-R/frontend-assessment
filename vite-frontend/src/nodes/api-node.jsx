@@ -15,8 +15,8 @@ export const APINode = (props) => {
 
   const config = {
     title: "API Call",
-    color: "text-red-700",
-    borderColor: "border-red-300",
+    color: "text-sky-700",
+    borderColor: "border-sky-300",
     handles: [
       {
         id: "url",
@@ -54,9 +54,9 @@ export const APINode = (props) => {
             onChange={(e) =>
               handleTextChange(e, updateField, setNodeWidth, setNodeHeight,setUrl,textareaRef)
             }
-            className="w-full text-sm p-2 border border-gray-300 rounded resize-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            className="w-full text-sm p-2 border border-gray-300 rounded resize-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
             placeholder="https://api.example.com"
-            rows={1}
+            rows={2}
             style={{ height: "auto" }}
           />
         </div>
@@ -67,7 +67,7 @@ export const APINode = (props) => {
           <select
             value={data.method || "GET"}
             onChange={(e) => handleMethodChange(e, updateField)}
-            className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-sky-500 focus:border-transparent"
           >
             <option value="GET">GET</option>
             <option value="POST">POST</option>

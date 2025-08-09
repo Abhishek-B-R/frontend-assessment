@@ -44,11 +44,12 @@ export const LLMNode = (props) => {
             onChange={(e) => handleModelChange(e, updateField)}
             className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-orange-500 focus:border-transparent"
           >
+            <option value="gpt-5">GPT-5</option>
             <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
             <option value="gpt-4">GPT-4</option>
             <option value="gpt-4-turbo">GPT-4 Turbo</option>
             <option value="claude-3">Claude 3</option>
-            <option value="claude-3.5">Claude 3.5</option>
+            <option value="claude-3.7">Claude 3.7</option>
           </select>
         </div>
       </>

@@ -1,5 +1,3 @@
-'use client';
-
 import { useRef, useState, useCallback } from 'react';
 import { useStore } from './store';
 import { PipelineNode } from './pipeline-node';
@@ -43,6 +41,7 @@ export const PipelineCanvas = () => {
       };
 
       addNode(newNode);
+      useStore.getState().autoConnectIfMatches?.(newNode);
     } catch (error) {
       console.error('Error parsing dropped data:', error);
     }

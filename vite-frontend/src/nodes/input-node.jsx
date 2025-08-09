@@ -1,27 +1,44 @@
 import { useState, useRef } from 'react';
 import { Position } from '@xyflow/react';
 import { BaseNode } from '../base-node';
+import { useStore } from '../store';
+import { handleTextChange } from './handleTextChange';
 
 export const InputNode = (props) => {
-  const [currName, setCurrName] = useState(props.data?.inputName || props.id.replace('customInput-', 'input_'));
+  const [currName, setCurrName] = useState(
+    props.data?.inputName || props.id.replace('customInput-', 'input_')
+  );
   const [inputType, setInputType] = useState(props.data.inputType || 'Text');
   const measureRef = useRef(null);
 
-  const handleNameChange = (e, updateField, setNodeWidth) => {
-    setCurrName(e.target.value);
-    updateField('inputName', e.target.value);
-    
-    // Auto-resize logic for horizontal expansion
-    if (measureRef.current) {
-      measureRef.current.textContent = e.target.value || 'placeholder';
-      const width = Math.max(measureRef.current.offsetWidth + 80, 200); // Add padding and min width
-      setNodeWidth(width);
-    }
+  const handleNameChange = (e, updateField) => {
+    const newName = e.target.value;
+    setCurrName(newName);
+    updateField('inputName', newName);
+
+    useStore.getState().autoConnectIfMatches?.({
+      id: props.id,
+      type: 'input',
+      data: { inputName: newName }
+    });
   };
 
   const handleTypeChange = (e, updateField) => {
-    setInputType(e.target.value);
-    updateField('inputType', e.target.value);
+    const newType = e.target.value;
+    setInputType(newType);
+    updateField('inputType', newType);
+
+    // Optionally reset the name when type changes
+    const defaultName = props.id.replace('customInput-', 'input_');
+    setCurrName(defaultName);
+    updateField('inputName', defaultName);
+
+    // Trigger auto-connect for defaultName
+    useStore.getState().autoConnectIfMatches?.({
+      id: props.id,
+      type: 'input',
+      data: { inputName: defaultName }
+    });
   };
 
   const config = {
@@ -36,22 +53,52 @@ export const InputNode = (props) => {
         style: { right: -8 }
       }
     ],
-    content: ({ updateField, setNodeWidth }) => (
+    content: ({ updateField, setNodeWidth, setNodeHeight }) => (
       <>
-        <span ref={measureRef} className="absolute invisible text-sm font-medium" style={{ whiteSpace: 'nowrap' }} />
+        <span
+          ref={measureRef}
+          className="absolute invisible text-sm font-medium"
+          style={{ whiteSpace: 'nowrap' }}
+        />
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Name:</label>
-          <input 
-            type="text" 
-            value={currName} 
-            onChange={(e) => handleNameChange(e, updateField, setNodeWidth)}
-            className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Name:
+          </label>
+          {inputType === 'File' ? (
+            <input
+              type="file"
+              className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onChange={(e) => {
+                handleNameChange(e, updateField);
+                // no width/height adjustments for file input
+              }}
+            />
+          ) : (
+            <textarea
+              rows={1}
+              value={currName}
+              onChange={(e) => {
+                handleNameChange(e, updateField);
+                handleTextChange(
+                  e,
+                  updateField,
+                  setNodeWidth,
+                  setNodeHeight,
+                  setCurrName,
+                  measureRef,
+                  props.id
+                );
+              }}
+              className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none overflow-hidden"
+            />
+          )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Type:</label>
-          <select 
-            value={inputType} 
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Type:
+          </label>
+          <select
+            value={inputType}
             onChange={(e) => handleTypeChange(e, updateField)}
             className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >

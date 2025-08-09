@@ -14,12 +14,26 @@ export const PipelineNode = ({
 
   const handleInputChange = (field, value) => {
     updateNodeData(node.id, { [field]: value });
-    
-    // Measure text width for auto-sizing
+
     if (measureRef.current) {
       measureRef.current.textContent = value || 'placeholder';
-      const width = Math.max(measureRef.current.offsetWidth + 20, 80); // min width 80px
+      const width = Math.max(measureRef.current.offsetWidth + 20, 80);
       setInputWidths(prev => ({ ...prev, [field]: width }));
+    }
+
+    const store = useStore.getState();
+    if (field === 'inputName') {
+      store.autoConnectIfMatches({
+        id: node.id,
+        type: 'input',
+        data: { inputName: value }
+      });
+    } else if (field === 'text') {
+      store.autoConnectIfMatches({
+        id: node.id,
+        type: 'text',
+        data: { text: value }
+      });
     }
   };
 

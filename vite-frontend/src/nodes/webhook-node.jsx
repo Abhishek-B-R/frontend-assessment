@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Position } from '@xyflow/react';
 import { BaseNode } from '../base-node';
+import { handleTextChange } from "./handleTextChange"; // Assuming this utility function is defined
 
 export const WebhookNode = (props) => {
   const [url, setUrl] = useState(props.data?.url || '');
   const [secret, setSecret] = useState(props.data?.secret || '');
+  const textareaRef = useRef(null);
 
   const config = {
     title: 'Webhook',
-    color: 'text-teal-700',
-    borderColor: 'border-teal-300',
+    color: 'text-pink-700',
+    borderColor: 'border-pink-300',
     handles: [
       {
         id: 'data',
@@ -30,19 +32,19 @@ export const WebhookNode = (props) => {
         style: { right: -8, top: '70%' }
       }
     ],
-    content: ({ updateField }) => (
+    content: ({ updateField,setNodeHeight,setNodeWidth }) => (
       <>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Webhook URL:</label>
-          <input 
-            type="text" 
+          <textarea
             value={url} 
+            rows={1}
+            ref={textareaRef}
             onChange={(e) => {
-              setUrl(e.target.value);
-              updateField('url', e.target.value);
+              handleTextChange(e, updateField, setNodeWidth, setNodeHeight,setUrl,textareaRef)
             }}
-            className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            placeholder="https://webhook.site/..."
+            className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+            placeholder="https://webhook.com"
           />
         </div>
         <div>
@@ -54,7 +56,7 @@ export const WebhookNode = (props) => {
               setSecret(e.target.value);
               updateField('secret', e.target.value);
             }}
-            className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-pink-500 focus:border-transparent"
             placeholder="webhook secret"
           />
         </div>

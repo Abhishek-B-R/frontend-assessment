@@ -1,22 +1,12 @@
 import { useState, useRef } from 'react';
 import { Position } from '@xyflow/react';
 import { BaseNode } from '../base-node';
+import { handleTextChange } from "./handleTextChange"; // Assuming this utility function is defined
 
 export const OutputNode = (props) => {
   const [currName, setCurrName] = useState(props.data?.outputName || props.id.replace('customOutput-', 'output_'));
   const [outputType, setOutputType] = useState(props.data.outputType || 'Text');
   const measureRef = useRef(null);
-
-  const handleNameChange = (e, updateField, setNodeWidth) => {
-    setCurrName(e.target.value);
-    updateField('outputName', e.target.value);
-    
-    if (measureRef.current) {
-      measureRef.current.textContent = e.target.value || 'placeholder';
-      const width = Math.max(measureRef.current.offsetWidth + 80, 200);
-      setNodeWidth(width);
-    }
-  };
 
   const handleTypeChange = (e, updateField) => {
     setOutputType(e.target.value);
@@ -35,15 +25,16 @@ export const OutputNode = (props) => {
         style: { left: -8 }
       }
     ],
-    content: ({ updateField, setNodeWidth }) => (
+    content: ({ updateField, setNodeWidth, setNodeHeight }) => (
       <>
-        <span ref={measureRef} className="absolute invisible text-sm font-medium" style={{ whiteSpace: 'nowrap' }} />
+        <span className="absolute invisible text-sm font-medium" style={{ whiteSpace: 'nowrap' }} />
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Name:</label>
-          <input 
-            type="text" 
-            value={currName} 
-            onChange={(e) => handleNameChange(e, updateField, setNodeWidth)}
+          <label className="block text-sm font-medium text-gray-700">Name:</label>
+          <textarea
+            value={currName}
+            rows={1}
+            ref={measureRef}
+            onChange={(e) => handleTextChange(e, updateField, setNodeWidth, setNodeHeight, setCurrName, measureRef)}
             className="w-full text-sm p-2 border border-gray-300 rounded focus:ring-2 focus:ring-green-500 focus:border-transparent"
           />
         </div>
