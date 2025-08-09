@@ -20,8 +20,11 @@ export const SubmitButton = () => {
       }))
     };
 
+    // const backendUrl = 'http://localhost:8000/pipelines/parse';
+    const backendUrl = 'https://api.nodesense.abhi.wtf/pipelines/parse';
+
     try {
-      const resp = await fetch('http://localhost:8000/pipelines/parse', {
+      const resp = await fetch(backendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pipeline)
