@@ -158,6 +158,7 @@ server {
 * Implementing undo/redo
 * Adding accessibility features
 * Optimizing for large graphs
+* Node Connection removal with a cross mark
 
 ---
 

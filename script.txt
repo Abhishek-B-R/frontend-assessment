@@ -1,0 +1,101 @@
+1. Introduction (30–40 sec)
+Camera/voice only or voice-over with code open
+
+Hi, my name is Abhishek, and in this video, I’ll be taking you through how I approached and completed the VectorShift Frontend Technical Assessment.
+I’ll show you my thought process, the technical decisions I made, and how I ensured the code is maintainable, scalable, and production-ready — while keeping it clean and easy to extend in the future.
+
+2. Part 1 – Node Abstraction (1 min)
+Screen shows /frontend/src/nodes folder, highlight before & after abstraction
+
+Since the given frontend was in create-react-app, I moved it to Vite since it is Faster Development Server,Optimized Build Performance, and Active Maintenance and Ecosystem
+
+The original setup had each node type — Inputs, Outputs, LLMs, and Text — repeating a lot of similar code.
+Instead of duplicating logic, I created a Node Factory abstraction.
+
+This abstraction takes in configuration parameters such as:
+
+Node title
+Description/content
+Input & output handle definitions
+Styling options
+From this, we can generate any node type dynamically without rewriting the base logic.
+After implementing this, I created five new custom nodes to demonstrate the flexibility:
+
+API Request Node
+Conditional Logic Node / Filter Node
+Data Transform Node
+Timer Node / Delay Node
+Webhook Node
+Variable Node / Key Value Pair Node
+Math Node for basic Arithmatic operations
+Note Node
+
+This means that adding a new node is now just adding a config file, not touching the rendering logic — making it future-proof and extremely fast to iterate on.
+
+3. Part 2 – Styling (1 min)
+
+Show before → after UI transformation
+The provided frontend had minimal styling, so I:
+Added a unified design system with consistent typography, spacing, and colors
+Used Tailwind CSS for utility-based styling and React Flow custom styles for nodes
+Enhanced the workspace layout for better graph visibility
+Styled handles, edges, and node bodies for visual hierarchy and clarity
+The result is a polished, modern UI that looks professional and intuitive, while still being fully customizable.
+
+4. Part 3 – Text Node Logic (1–1.5 min)
+
+Show Text Node in action, type some text, watch it resize, type {{variable}} and see handle appear
+For the Text Node improvements:
+Dynamic resizing:
+As the user types more text, the node automatically resizes both width and height to fit the content, improving readability.
+
+Variable detection:
+Whenever the user types {{variableName}}, a new input handle appears on the left side of the node.
+This is done with regex parsing and updating the node’s state dynamically.
+This allows for real-time flexible input creation — a step toward a more interactive and powerful pipeline editor.
+
+5. Part 4 – Backend Integration (1–1.5 min)
+
+Show submit.jsx → call backend → backend code → response alert in frontend
+I connected the frontend to the provided FastAPI backend:
+In /frontend/src/submit.js, the pipeline’s nodes & edges are sent to /pipelines/parse.
+On the backend (main.py):
+Count nodes and edges
+Check if the graph is a Directed Acyclic Graph (DAG) using topological sorting
+
+The backend returns:  json
+
+On the frontend, I display this info in a user-friendly alert.
+Now, users can visually build pipelines and instantly validate their structure.
+
+6. Deployment & DevOps (1 min)
+
+Show Azure terminal & Nginx configs
+I set up the backend for production deployment:
+Created a virtual environment setup script that auto-installs dependencies if missing
+Used PM2 to keep the FastAPI server running forever
+Configured Nginx reverse proxy for the backend on api.nodesense.abhi.wtf
+Ensured it runs securely with HTTPS using Let’s Encrypt
+This ensures the project can run 24/7 in a real-world environment.
+
+7. Future Work (30 sec)
+
+Some next steps I’d like to implement if needed:
+Adding TypeScript for stronger type safety
+Improving mobile/touch support
+Adding onboarding/help
+Implementing undo/redo functionality
+Accessibility improvements
+Optimizing for very large graphs
+Node connection removal with a cross mark
+
+8. Closing (20 sec)
+
+This project demonstrates:
+Abstraction-driven frontend development
+Polished UI design
+Real-time dynamic UI logic
+Full backend integration with DAG validation
+Production deployment with Nginx and PM2
+
+Thank you for reviewing my work. I’m excited about the possibility of bringing this approach and attention to detail to VectorShift.
